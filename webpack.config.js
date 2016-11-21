@@ -1,6 +1,9 @@
 var path = require('path');
 var webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin")
+var ExtractTextPlugin = require("extract-text-webpack-plugin") // 分离css
+var HtmlWebpackPlugin = require('html-webpack-plugin') // 自动生成 HTML 文件
+var CleanPlugin = require('clean-webpack-plugin');
+var WebpackMd5Hash = require('webpack-md5-hash'); // hash
 
 var webpackConfig;
 
@@ -8,8 +11,8 @@ webpackConfig = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
-    filename: '[name].bundle.js'
+    //publicPath: '/dist/',
+    filename: './assets/js/[name].bundle.[chunkhash].js'
   },
   module: {
     loaders: [
@@ -24,8 +27,13 @@ webpackConfig = {
         exclude: /node-modules/
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
-        loader: 'file-loader',
+        test: /\.styl$/,
+        //loader: 'style-loader!css-loader!autoprefixer!stylus-loader?paths=node_modules/bootstrap-stylus/stylus/'
+        loader: ExtractTextPlugin.extract('style', 'css!stylus')
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/,
+        loader: 'url-loader?limit=8192',
         options: {
           name: '[name].[ext]?[hash]'
         }
@@ -40,7 +48,23 @@ webpackConfig = {
     }
   },
   plugins: [
-    new ExtractTextPlugin("style.css")
+    new CleanPlugin('dist'),
+    new webpack.BannerPlugin('This file is created by Duyb'),
+    new WebpackMd5Hash(),
+    new ExtractTextPlugin('./style/[name].[contenthash].css'),
+    new HtmlWebpackPlugin({
+      filename: 'views/index.html',
+      template: './src/views/index.html',
+      //hash: true,
+      inject: true,
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency'
+    }),
   ]
 };
 module.exports = webpackConfig;
