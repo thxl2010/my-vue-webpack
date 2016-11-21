@@ -1,0 +1,19 @@
+{
+  "name": "vue-webpack",
+  "version": "1.0.0",
+  "description": "vue webpack",
+  "main": "index.js",
+  "scripts": {
+    "test": "webpack --colors"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.oschina.net/2010thxl/vue-webpack.git"
+  },
+  "keywords": [
+    "vue",
+    "webpack"
+  ],
+  "author": "Duyb",
+  "license": "ISC"
+}
