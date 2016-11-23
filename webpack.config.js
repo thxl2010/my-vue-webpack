@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 var ExtractTextPlugin = require("extract-text-webpack-plugin") // 分离css
 var HtmlWebpackPlugin = require('html-webpack-plugin') // 自动生成 HTML 文件
 var CleanPlugin = require('clean-webpack-plugin');
@@ -24,7 +25,7 @@ webpackConfig = {
         test: /\.js$/,
         loader: 'babel',
         include: /src/,
-        exclude: /node-modules/
+        exclude: /(node-modules|src\/assets\/js\/thirdParty)/
       },
       {
         test: /\.styl$/,
@@ -49,6 +50,7 @@ webpackConfig = {
   },
   plugins: [
     new CleanPlugin('dist'),
+    new webpack.optimize.OccurenceOrderPlugin(), // 为组件分配ID，通过这个插件webpack可以分析和优先考虑使用最多的模块，并为它们分配最小的ID
     new webpack.BannerPlugin('This file is created by Duyb'),
     new WebpackMd5Hash(),
     new ExtractTextPlugin('./style/[name].[contenthash].css'),
@@ -65,6 +67,31 @@ webpackConfig = {
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency'
     }),
+    // jquery
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery"
+    }),
+    new CommonsChunkPlugin('vendor', './assets/js/thirdParty/vendor.js') //这是第三方库打包生成的文件
+
   ]
 };
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports.devtool = '#source-map';
+  module.exports.plugins = (module.exports.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"'
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  ])
+}
+
 module.exports = webpackConfig;
