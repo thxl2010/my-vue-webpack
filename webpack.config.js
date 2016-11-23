@@ -79,8 +79,8 @@ webpackConfig = {
 };
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map';
-  module.exports.plugins = (module.exports.plugins || []).concat([
+  webpackConfig.devtool = '#source-map';
+  webpackConfig.plugins = (webpackConfig.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
