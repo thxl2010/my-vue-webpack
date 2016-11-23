@@ -8,7 +8,8 @@
     </ul>
   </div>
 </template>
-<style lang="stylus">
+<!-- 希望组件内写的css只对当前组件起作用，只需要在style中写入scoped -->
+<style lang="stylus" scoped>
   .h4
     background-color #abf932
   .header

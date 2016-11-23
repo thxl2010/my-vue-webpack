@@ -65,7 +65,7 @@ export default {
       this.activeColor = '#777'
     }
   },
-  components: {
+  components: { // 注册组件
     MyHeader
   }
 }
