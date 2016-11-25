@@ -55,7 +55,7 @@ webpackConfig = {
     new WebpackMd5Hash(),
     new ExtractTextPlugin('./style/[name].[contenthash].css'),
     new HtmlWebpackPlugin({
-      filename: 'views/index.html',
+      filename: './views/index.html',
       template: './src/views/index.html',
       //hash: true,
       inject: true,
