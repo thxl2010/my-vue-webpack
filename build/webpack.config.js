@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
+var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin") // 分离css
 var HtmlWebpackPlugin = require('html-webpack-plugin') // 自动生成 HTML 文件
 var CleanPlugin = require('clean-webpack-plugin');
@@ -9,10 +10,13 @@ var WebpackMd5Hash = require('webpack-md5-hash'); // hash
 var webpackConfig;
 
 webpackConfig = {
-  entry: './src/index.js',
+  entry: '../src/index.js',
+  vendors: [
+    'Vue'
+  ],
   output: {
     path: path.resolve(__dirname, './dist'),
-    //publicPath: '/dist/',
+    publicPath: '/',
     filename: './assets/js/[name].bundle.[chunkhash].js'
   },
   module: {
@@ -51,12 +55,13 @@ webpackConfig = {
   plugins: [
     new CleanPlugin('dist'),
     new webpack.optimize.OccurenceOrderPlugin(), // 为组件分配ID，通过这个插件webpack可以分析和优先考虑使用最多的模块，并为它们分配最小的ID
+    new webpack.NoErrorsPlugin(), // 报错但不退出webpack进程
     new webpack.BannerPlugin('This file is created by Duyb'),
     new WebpackMd5Hash(),
     new ExtractTextPlugin('./style/[name].[contenthash].css'),
     new HtmlWebpackPlugin({
       filename: 'views/index.html',
-      template: './src/views/index.html',
+      template: path.resolve(__dirname, '../src/views/index.html'),
       //hash: true,
       inject: true,
       minify: {
@@ -73,12 +78,22 @@ webpackConfig = {
       jQuery: "jquery",
       "window.jQuery": "jquery"
     }),
-    new CommonsChunkPlugin('vendor', './assets/js/thirdParty/vendor.js') //这是第三方库打包生成的文件
-
+    new CommonsChunkPlugin('vendor', './assets/js/thirdParty/vendor.js') // 这是第三方库打包生成的文件/公共代码
   ]
 };
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'development') {
+  webpackConfig.entry = ['webpack-hot-middleware/client', path.resolve(__dirname, '../src/index.js')]; // 热加载
+  webpackConfig.plugins = (webpackConfig.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"development"'
+      }
+    }),
+    new webpack.HotModuleReplacementPlugin(), // 热加载
+    new OpenBrowserPlugin({ url: 'http://localhost:3030' })
+  ])
+}  else if (process.env.NODE_ENV === 'production') {
   webpackConfig.devtool = '#source-map';
   webpackConfig.plugins = (webpackConfig.plugins || []).concat([
     new webpack.DefinePlugin({
