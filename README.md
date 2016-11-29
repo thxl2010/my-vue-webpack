@@ -7,7 +7,7 @@ style-loader!css-loader!stylus-loader
 url-loader?limit=8192
 
 2. [vue.js](https://vuefe.cn/)
-```
+```js
   vue: {
     loaders: {
       css: ExtractTextPlugin.extract("css"),
@@ -18,7 +18,7 @@ url-loader?limit=8192
 ```
 
 3. plugins
-```
+```js
 var path = require('path');
 var webpack = require('webpack');
 var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
@@ -29,7 +29,7 @@ var WebpackMd5Hash = require('webpack-md5-hash'); // hash
 ```
 
 # Vue.js多页面应用 origin/MPA
-```
+```js
 var glob = require('glob'); // 这里的glob是nodejs的glob模块，是用来读取webpack入口目录文件的
 var entries = getEntry('./src/module/**/*.js'); // 获得入口js文件
 var pages = getEntry('./src/module/**/*.html');
@@ -49,11 +49,11 @@ function getEntry(globPath) {
 }
 ```
 
-```
+```js
 entry: entries, // MPA
 ```
 
-```
+```js
 for (var pathname in pages) {
   // 配置生成的html文件，定义路径等
   var conf = {
