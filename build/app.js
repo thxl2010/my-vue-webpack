@@ -12,7 +12,7 @@ var routes = require('../src/routes/index');
 var app = express(); // 实例化Express对象
 
 // view engine setup
-app.set('views', path.join(__dirname, '../dist/views')); // 视图
+app.set('views', path.join(__dirname, '../dist/module')); // 视图
 // app.set('view engine', 'jade');  // 模板引擎
 
 // html
