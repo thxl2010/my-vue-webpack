@@ -4,10 +4,11 @@
   "description": "vue webpack",
   "main": "index.js",
   "scripts": {
+    "server": "node ./build/server.js",
     "test": "webpack --colors",
     "watch": "cross-env NODE_ENV=development webpack --progress --colors --watch",
     "build": "cross-env NODE_ENV=production webpack --colors",
-    "server": "webpack-dev-server --open --inline"
+    "webpackServer": "webpack-dev-server --open --inline"
   },
   "repository": {
     "type": "git",
