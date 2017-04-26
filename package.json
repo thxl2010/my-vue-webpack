@@ -4,7 +4,8 @@
   "description": "vue webpack",
   "main": "index.js",
   "scripts": {
-    "server": "node ./build/server.js",
+    "development_server": "cross-env NODE_ENV=development node ./build/server.js",
+    "production_server": "cross-env NODE_ENV=production node ./build/server.js",
     "test": "webpack --colors",
     "watch": "cross-env NODE_ENV=development webpack --progress --colors --watch",
     "build": "cross-env NODE_ENV=production webpack --colors",
@@ -43,6 +44,7 @@
     "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.24.1",
     "morgan": "^1.7.0",
+    "open-browser-webpack-plugin": "0.0.5",
     "serve-favicon": "^2.3.2",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.3.1",
@@ -50,7 +52,9 @@
     "vue-loader": "^9.9.5",
     "vue-style-loader": "^1.0.0",
     "webpack": "^1.13.3",
+    "webpack-dev-middleware": "^1.10.2",
     "webpack-dev-server": "^1.16.2",
+    "webpack-hot-middleware": "^2.18.0",
     "webpack-md5-hash": "0.0.5"
   }
 }

@@ -67,3 +67,65 @@ for (var pathname in pages) {
 }
 ```
 
+# 热加载
+1. [webpack-dev-middleware](https://github.com/webpack/webpack-dev-middleware)  [webpack-hot-middleware](https://github.com/glenjamin/webpack-hot-middleware)
+2. webpack.config
+```js
+if (process.env.NODE_ENV === 'development') {
+  webpackConfig.entry = ['webpack/hot/dev-server', 'webpack-hot-middleware/client?reload=true&&timeout=20000', path.resolve(__dirname, './src/index.js')]; // 热加载
+  webpackConfig.output.publicPath = '/';
+  webpackConfig.plugins = (webpackConfig.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"development"'
+      }
+    }),
+    new webpack.HotModuleReplacementPlugin(), // 热加载
+    new OpenBrowserPlugin({ url: `http://localhost:${(process.env.PORT || 3008)}/views/index.html` })
+  ])
+}
+```
+
+3. Express server
+```js
+var webpack = require('webpack');
+var config = require('../webpack.config.js');
+var WebpackDevMiddleware = require('webpack-dev-middleware');
+var WebpackHotMiddleware = require('webpack-hot-middleware');
+
+var compiler = webpack(config); // 调用webpack并把配置传递过去
+
+var app = express(); // 实例化Express对象
+var mode = app.get('env');  // development production
+
+// 注册中间件
+if (mode === 'development') {
+  console.log('config.output.publicPath : ', config.output.publicPath);
+  // 使用 webpack-dev-middleware 中间件
+  var devMiddleware = WebpackDevMiddleware(compiler, {
+    publicPath: config.output.publicPath,
+    stats: {
+      color: true,
+      chunks: false
+    }
+  })
+
+// 使用 webpack-hot-middleware 中间件
+  var hotMiddleware = WebpackHotMiddleware(compiler, {
+    log: console.log
+  });
+
+// webpack插件，监听html文件改变事件
+  compiler.plugin('compilation', function (compilation) {
+    compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
+      // 发布事件
+      hotMiddleware.publish({ action: 'reload' })
+      cb()
+    })
+  })
+
+  app.use(devMiddleware);
+  app.use(hotMiddleware);
+}
+
+```

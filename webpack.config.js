@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
+var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 var ExtractTextPlugin = require("extract-text-webpack-plugin") // 分离css
 var HtmlWebpackPlugin = require('html-webpack-plugin') // 自动生成 HTML 文件
 var CleanPlugin = require('clean-webpack-plugin');
@@ -78,7 +79,19 @@ webpackConfig = {
   ]
 };
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'development') {
+  webpackConfig.entry = ['webpack/hot/dev-server', 'webpack-hot-middleware/client?reload=true&&timeout=20000', path.resolve(__dirname, './src/index.js')]; // 热加载
+  webpackConfig.output.publicPath = '/';
+  webpackConfig.plugins = (webpackConfig.plugins || []).concat([
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"development"'
+      }
+    }),
+    new webpack.HotModuleReplacementPlugin(), // 热加载
+    new OpenBrowserPlugin({ url: `http://localhost:${(process.env.PORT || 3008)}/views/index.html` })
+  ])
+}  else if (process.env.NODE_ENV === 'production') {
   webpackConfig.devtool = '#source-map';
   webpackConfig.plugins = (webpackConfig.plugins || []).concat([
     new webpack.DefinePlugin({
