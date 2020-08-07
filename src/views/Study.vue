@@ -4,6 +4,7 @@
     <p>twiceTheCount : {{ twiceTheCount }}</p>
     <button @click="increase">{{ btnText }} increase</button>
     <button @click="reverse">{{ btnText }} reverse</button>
+    <button @click="getList">{{ btnText }} getList</button>
     <div>
       <ul>
         <li v-for="item in list" :key="item.id">{{ item.name }}</li>
@@ -14,6 +15,7 @@
 
 <script>
 import { computed, ref, onMounted, watch } from 'vue';
+import API from 'API';
 
 const LIST = [
   {
@@ -49,6 +51,10 @@ export default {
       console.log('list :', list);
     }
 
+    const getList = async () => {
+      list.value = await API.fetchUserRepositories();
+    };
+
     // ! [Lifecycle Hook Registration Inside setup](https://v3.vuejs.org/guide/composition-api-introduction.html#lifecycle-hook-registration-inside-setup)
     onMounted(increase);
     onMounted(() => {
@@ -71,6 +77,7 @@ export default {
       list,
       increase,
       reverse,
+      getList,
     };
   },
   mounted() {
