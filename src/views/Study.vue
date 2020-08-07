@@ -26,11 +26,26 @@
       <p>state.count : {{ state.count }}</p>
       <button @click="increaseStateCount">increase state.count</button>
     </div>
+
+    <div>
+      <p>
+        watchEffect ： <span>{{ state.text }}</span
+        ><span ref="out">watchEffect</span>
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
-import { computed, reactive, ref, onMounted, watch, readonly } from 'vue';
+import {
+  computed,
+  watchEffect,
+  reactive,
+  ref,
+  onMounted,
+  watch,
+  readonly,
+} from 'vue';
 import API from 'API';
 
 const LIST = [
@@ -68,6 +83,7 @@ export default {
     // https://v3.vuejs.org/guide/reactivity-fundamentals.html#declaring-reactive-state
     const state = reactive({
       count: 0,
+      text: 'watchEffect',
     });
     const copy = readonly(state);
     const increaseStateCount = () => {
@@ -76,6 +92,26 @@ export default {
       // ! warning: "Set operation on key 'count' failed: target is readonly."
       copy.count++;
     };
+
+    const out = ref(null);
+    console.log('ref out :', out);
+    onMounted(() => {
+      // 在渲染完成后, 这个 DOM 会被赋值给 out ref 对象
+      console.log('onMounted ref out :', out.value);
+    });
+
+    // 副作用：立即执行传入的一个函数，并响应式追踪其依赖，并在其依赖变更时重新运行该函数
+    watchEffect(() => {
+      console.log('ref out :', out);
+      // out.value.innerHTML = `副作用 watchEffect ${state.text}`;
+      document.body.innerHTML = `副作用 watchEffect ${state.text}`;
+      console.log('watchEffect state.text :', state.text);
+    });
+
+    // 修改响应式数据，这会触发副作用函数重新执行
+    setTimeout(() => {
+      state.text += ' world';
+    }, 5000);
 
     let list = ref(LIST);
     const getList = async () => {
