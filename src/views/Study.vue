@@ -33,6 +33,16 @@
         ><span ref="out" id="out">watchEffect</span>
       </p>
     </div>
+
+    <div>
+      useMouse pointer : pointer.x.value : {{ pointer.x.value }} ,
+      pointer.y.value: {{ pointer.y.value }}
+    </div>
+    <div>useMouse x : {{ x }} , y: {{ y }}</div>
+    <div>
+      useMouse reactive pointer2 : pointer2.x : {{ pointer2.x }} , pointer2.y:
+      {{ pointer2.y }}
+    </div>
   </div>
 </template>
 
@@ -47,6 +57,7 @@ import {
   readonly,
 } from 'vue';
 import API from 'API';
+import useMouse from '@/composables/useMouse';
 
 const LIST = [
   {
@@ -154,6 +165,11 @@ export default {
       increase();
     });
 
+    // useMouse
+    const { x, y } = useMouse();
+    const pointer = { x, y };
+    const pointer2 = reactive({ x, y });
+
     return {
       btnText,
       count,
@@ -166,6 +182,10 @@ export default {
       state,
       out,
       increaseStateCount,
+      pointer,
+      x,
+      y,
+      pointer2,
     };
   },
   mounted() {
