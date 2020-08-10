@@ -30,7 +30,7 @@
     <div>
       <p>
         watchEffect ： <span>{{ state.text }}</span
-        ><span ref="out">watchEffect</span>
+        ><span ref="out" id="out">watchEffect</span>
       </p>
     </div>
   </div>
@@ -94,18 +94,36 @@ export default {
     };
 
     const out = ref(null);
-    console.log('ref out :', out);
+    console.log('ref out :', out, out.value, document.querySelector('#out'));
     onMounted(() => {
-      // 在渲染完成后, 这个 DOM 会被赋值给 out ref 对象
-      console.log('onMounted ref out :', out.value);
-    });
+      // 副作用：立即执行传入的一个函数，并响应式追踪其依赖，并在其依赖变更时重新运行该函数
+      // ! 注意setup()将在组件挂载前调用，因此如果想要在watchEffect中使用 DOM （或者组件），请在挂载的钩子中声明watchEffect
+      // watch 相比 watchEffect , watch 是惰性的，更明确哪些状态的改变会触发侦听器重新运行，并且可以访问被侦听属性的变化前后的值。
+      watchEffect(
+        (onInvalidate) => {
+          // WARNING: 在渲染完成后, 这个 DOM 会被赋值给 out ref 对象
+          console.log(
+            'onMounted ref out :',
+            out,
+            out.value,
+            document.querySelector('#out')
+          );
 
-    // 副作用：立即执行传入的一个函数，并响应式追踪其依赖，并在其依赖变更时重新运行该函数
-    watchEffect(() => {
-      console.log('ref out :', out);
-      // out.value.innerHTML = `副作用 watchEffect ${state.text}`;
-      document.body.innerHTML = `副作用 watchEffect ${state.text}`;
-      console.log('watchEffect state.text :', state.text);
+          // document.querySelector('#out').innerHTML = `副作用 watchEffect ${
+          out.value.innerHTML = `副作用 watchEffect ${
+            state.text
+          } ${new Date()}`;
+          console.log('watchEffect state.text :', state.text);
+
+          // ! 清除副作用
+          onInvalidate(() => {
+            console.log('清除副作用');
+          });
+        },
+        {
+          flush: 'sync',
+        }
+      );
     });
 
     // 修改响应式数据，这会触发副作用函数重新执行
@@ -146,6 +164,7 @@ export default {
       reverse,
       update,
       state,
+      out,
       increaseStateCount,
     };
   },
