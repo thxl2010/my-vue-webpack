@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],
+      "V/*": ["src/views/*"],
+      "C/*": ["src/components/*"],
+      "API": ["src/assets/js/api/index.js"]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "server",
+    "dist",
+    "mock",
+    "scripts",
+    "uploads",
+    "server",
+    "public",
+    "static",
+    "views",
+    "test"
+  ],
+  "include": ["src/**/*"]
+}

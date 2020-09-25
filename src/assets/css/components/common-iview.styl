@@ -1,0 +1,86 @@
+@import "variables.styl"
+
+/* button */
+.ivu-btn-primary
+  &:hover, &:active, &.active
+    background-color $blue-hover
+  &.disabled, &[disabled], &.disabled:hover, &[disabled]:hover, &.disabled:focus, &[disabled]:focus,
+  &.disabled:active, &[disabled]:active, &.disabled.active, &[disabled].active
+    color #fff
+    background-color $blue-disabled
+    border-color $blue-disabled
+fieldset[disabled]
+  .ivu-btn-primary, .ivu-btn-primary:hover, .ivu-btn-primary:focus, .ivu-btn-primary:active, .ivu-btn-primary.active
+    color #fff
+    background-color $blue-disabled
+    border-color $blue-disabled
+.ivu-btn-default
+  background-color #fff
+
+/* table */
+.ivu-table-wrapper
+  border-width 0 !important
+.ivu-table
+  tr
+    th
+      height 48px
+      min-height 48px
+    td
+      height 40px
+      min-height 40px
+  &:after
+    background-color transparent !important
+.ivu-table-cell
+  img
+    width 50px;
+    height 50px !important;
+    margin-top 5px
+
+/* page */
+.ivu-page
+  text-align right
+  margin-bottom 24px
+  margin-top 24px
+.ivu-page-prev, .ivu-page-next, .ivu-page-item-active
+  background-color: white !important;
+.ivu-page-item-active a, .ivu-page-item-active:hover a
+  color: $primary !important;
+.ivu-page-prev, .ivu-page-next, .ivu-page-item
+  min-width 24px !important
+
+/* input */
+input.ivu-input, textarea.ivu-input
+  background-color #fff
+
+/* select */
+.ivu-select-selection
+  overflow hidden
+  .ivu-select-selected-value
+    min-height 32px
+    line-height 32px!important
+
+.ivu-poptip
+  width auto
+.ivu-badge-dot
+  z-index 1 !important
+
+/* ivu-modal */
+.ivu-modal
+  .ivu-modal-header
+    padding-left 24px !important
+  .ivu-modal-body
+    padding 20px 24px
+  .ivu-modal-footer
+    padding 12px 24px !important
+
+.vertical-center-modal
+  display flex
+  align-items center
+  justify-content center
+  .ivu-modal
+    top 0
+
+.ivu-progress-inner
+  background-color $disabled-bg
+.ivu-progress-bg
+  background-color #2db7f5

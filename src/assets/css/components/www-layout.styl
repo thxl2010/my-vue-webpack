@@ -1,0 +1,30 @@
+@import "./variables.styl"
+
+.btn
+  border-width 1px
+  border-style solid
+  text-align center
+.btn-primary
+  color #fff
+  background-color $blue1
+  border-color $blue1
+  &:hover, &:focus, &:active
+    background-color darken($blue1, 20%)
+  &.disabled, &[disabled]
+    background-color rgba(70,97,230,.65)
+    border-color rgba(70,97,230,.65)
+    &:hover, &:focus, &:active
+      background-color darken(rgba(70,97,230,.65), 20%)
+  &:hover
+    cursor pointer
+.btn-sm
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+.btn-default
+  border-color $blue1
+
+a
+  color $blue1
+  &:hover, &:focus
+    color darken($blue1, 20%)

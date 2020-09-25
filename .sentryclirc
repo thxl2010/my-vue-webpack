@@ -1,0 +1,8 @@
+[defaults]
+url = http://sentry.hello.world.com/
+org = hello
+project = hello-world-web
+
+[auth]
+token = xxxxxxxxxxxxxxx
+# TODO

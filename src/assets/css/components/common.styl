@@ -1,0 +1,168 @@
+@import "./variables.styl"
+@import "../mixins/_mixin.styl"
+
+// ========== 常用字体颜色 class ==========
+.black
+  color $black
+.gray
+  color $gray
+.light-gray
+  color $light-gray
+.blue, .text-primary, .color-info
+  color $blue
+.orange, .text-warning, .color-warning
+  color $orange
+.green, .text-success, .color-success
+  color $green
+.red, .text-danger, .color-error
+  color $red
+.pink
+  color $pink
+.pink-deep
+  color $pink_deep
+
+html, body
+  background $body-bg !important
+  overflow-x hidden
+  p
+    -webkit-margin-before 0
+    -webkit-margin-after 0
+footer
+  padding 20px 0
+  position absolute
+  bottom 0px
+  left 0
+  right 0px
+  margin 0 auto
+  p
+    line-height 20px
+    text-align center
+
+/* 升级浏览器提示 */
+.upgrade-alert
+  z-index 10
+  &+#app
+    header, aside
+      top 35px
+
+.panel
+  background-color #fff
+  width 100%
+  .panel-head
+    border-bottom 1px solid $gray-line
+    padding-bottom 30px
+    .panel-title
+      font-size 28px
+      font-weight bold
+      border-left 6px solid $black0
+      padding-left 10px
+  .panel-body
+    padding-top 20px
+    font-size 24px
+
+ul
+  padding 0
+  margin 0
+  list-style none
+
+.image-wrapper
+  display flex
+  justify-content center
+  width 100%
+  overflow hidden
+  &.fill-width
+    flex-direction column
+    > img
+      width 100%
+  &.fill-height
+    flex-direction row
+    > img
+      height 100%
+  &.justify-end
+    justify-content flex-end
+.fs-0
+  font-size 0
+img[src=""], img:not([src])
+  opacity 0
+[disabled]
+  cursor not-allowed !important
+
+
+//========== 消除浮动 float ==========
+.cf:before, .cf:after
+  content: ""
+  display: table
+.cf
+  zoom: 1
+.cf:after
+  clear: both
+
+//========== table ==========
+table
+  border-spacing 0
+  text-align left
+  .not-found
+    text-align center
+  &.table
+    td, th
+      padding 4px 8px
+
+//========== a ==========
+a
+  color $primary
+  &:hover, &:active, &.active
+    color $blue-btn-hover
+  &.red
+    color: $red
+    &:hover, &:active, &.active
+      color darken($red, 30%)
+
+//========== .form ==========
+.form-group
+  input, textarea, .ivu-input
+    border 1px solid $gray-line
+    &:focus
+      border-color $primary
+      box-shadow 0 0 0 2px rgba(53, 150, 252, 0.2)
+  .form-tip
+    display none
+    text-align left
+  &.has-error
+    input, textarea, .ivu-input
+      border-color $red
+      &:focus
+        box-shadow 0 0 0 2px rgba(224, 39, 25, 0.2)
+    .form-tip
+      display block
+      line-height 16px
+
+//========== 标旗 ==========
+.flag
+  font-size 18px
+  vertical-align middle
+  &.flag-1
+    color $red
+  &.flag-2
+    color $orange
+  &.flag-3
+    color $green
+  &.flag-4
+    color $primary
+  &.flag-5
+    color #c312d4
+  &.flag-0
+    color $black
+//========== 状态标记(小圆点) ==========
+.dot-status
+  display inline-block
+  vertical-align middle
+  width 6px
+  height 6px
+  border-radius 50%
+  background-color $primary
+  &.dot-status-primary
+    background-color $primary
+  &.dot-status-success
+    background-color $green
+  &.dot-status-danger
+    background-color $red
