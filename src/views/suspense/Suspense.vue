@@ -24,11 +24,11 @@
     </li>
   </ul>
 
-  <p>val : {{ val }}</p>
+  <p>name : {{ name }}</p>
   <Suspense>
     <template #default>
       <hr />
-      <AsyncComponent />
+      <AsyncComponent :name="name" @update-name="updateName" />
     </template>
     <template #fallback>
       <div>Loading...</div>
@@ -46,13 +46,18 @@ export default {
     AsyncComponent,
   },
   setup() {
-    const val = ref('du');
+    const name = ref('du');
     onMounted(() => {
       console.log('onMounted');
     });
+    const updateName = (val) => {
+      console.log('updateName :', val);
+      name.value = val;
+    };
 
     return {
-      val,
+      name,
+      updateName,
     };
   },
 };
