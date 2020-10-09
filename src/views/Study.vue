@@ -43,6 +43,11 @@
       useMouse reactive pointer2 : pointer2.x : {{ pointer2.x }} , pointer2.y:
       {{ pointer2.y }}
     </div>
+
+    <div>
+      <h2>提供/注入</h2>
+      <MyMap />
+    </div>
   </div>
 </template>
 
@@ -58,6 +63,7 @@ import {
 } from 'vue';
 import API from 'API';
 import useMouse from '@/composables/useMouse';
+import MyMap from '@/components/MyMap';
 
 const LIST = [
   {
@@ -190,6 +196,9 @@ export default {
   },
   mounted() {
     console.log('---- mounted ----');
+  },
+  components: {
+    MyMap,
   },
 };
 </script>
