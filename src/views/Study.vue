@@ -6,24 +6,29 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import ItemList from '@/components/items/ItemList.vue';
+import { ItemInterface } from '@/models/items/Item.interface';
 
 export default defineComponent({
   components: {
     ItemList,
   },
   setup() {
-    const items: any[] = [
+    // const items: any[] = [
+    const items: ItemInterface[] = [
       {
         id: '1',
         name: 'DU',
+        selected: false,
       },
       {
         id: '2',
         name: 'Li',
+        selected: false,
       },
       {
         id: '3',
         name: 'Chen',
+        selected: false,
       },
     ];
 
