@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h3>Items:</h3>
+    <h3>Items - loading: {{ loading }}</h3>
+    <Loader v-show="loading" />
     <ul>
       <Item
         v-for="item in items"
@@ -14,12 +15,14 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import Item from '@/components/items/children/Item.vue';
+import Item from '@/components/items/children/Item.component.vue';
+import Loader from '@/components/shared/Loader.vue';
 import { ItemInterface } from '@/models/items/Item.interface';
 
 export default defineComponent({
   components: {
     Item,
+    Loader,
   },
   props: {
     items: {
@@ -27,11 +30,14 @@ export default defineComponent({
       // ! Data Model Interfaces
       type: Array as PropType<ItemInterface[]>,
     },
+    loading: {
+      type: Boolean,
+    },
   },
-  setup() {
+  setup(props, { emit }) {
     const handleItemSelect = (item: ItemInterface) => {
-      item.selected = !item.selected;
       console.log('handleItemSelect :', item, item.selected);
+      emit('selectItem', item);
     };
 
     return {
