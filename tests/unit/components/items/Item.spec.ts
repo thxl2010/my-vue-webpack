@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import { shallowMount } from '@vue/test-utils';
-import Item from '@/components/items/children/Item.vue';
+import Item from '@/components/items/children/Item.component.vue';
 import { ItemInterface } from '@/models/items/Item.interface';
 
 describe('Item.vue', () => {
