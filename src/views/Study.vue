@@ -5,9 +5,10 @@
 
 <script lang="ts">
 import { defineComponent, reactive, computed, onMounted } from 'vue';
-import store from '@/store';
 import ItemList from '@/components/items/ItemList.vue';
 import { ItemInterface } from '@/models/items/Item.interface';
+import { store } from '@/store';
+import { MutationType, StoreModuleNames } from '@/models/store';
 
 export default defineComponent({
   name: 'Study',
@@ -18,22 +19,27 @@ export default defineComponent({
     // 计算属性
     // store
     const items = computed(() => {
-      return store.state.items;
+      return store.state.itemsState.items;
     });
     const loading = computed(() => {
-      return store.state.loading;
+      return store.state.itemsState.loading;
     });
 
     // 生命周期钩子
     onMounted(() => {
-      store.dispatch('loadItems');
+      store.dispatch(
+        `${StoreModuleNames.itemsState}/${MutationType.items.loadItems}`
+      );
     });
 
     const onSelectItem = (item: ItemInterface) => {
-      store.dispatch('selectItem', {
-        id: item.id,
-        selected: !item.selected,
-      });
+      store.dispatch(
+        `${StoreModuleNames.itemsState}/${MutationType.items.selectItem}`,
+        {
+          id: item.id,
+          selected: !item.selected,
+        }
+      );
     };
 
     return {
