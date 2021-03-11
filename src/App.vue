@@ -6,6 +6,7 @@
     :availableLocales="availableLocales"
     @clicked="onLocaleClicked"
   />
+  <ThemeSelector />
   <div id="nav">
     <router-link to="/">{{ i18n.t('navigation.home') }}</router-link> |
     <router-link to="/about">{{ i18n.t('navigation.about') }}</router-link> |
@@ -21,11 +22,13 @@ import { MutationType } from '@/models/store';
 import { useLocalesStore } from '@/store/locales';
 import { LocaleInfoInterface } from '@/models/localization/LocaleInfo.interface';
 import LocaleSelector from '@/components/locale-selector/LocaleSelector.vue';
+import ThemeSelector from '@/components/theme-selector/ThemeSelector.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
     LocaleSelector,
+    ThemeSelector,
   },
   setup() {
     const i18n = useI18n();
