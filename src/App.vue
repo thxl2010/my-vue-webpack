@@ -1,5 +1,9 @@
 <template>
   <h2>{{ i18n.t('welcome') }}</h2>
+  <LocaleSelector
+    :availableLocales="availableLocales"
+    @clicked="onLocaleClicked"
+  />
   <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
@@ -9,16 +13,35 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { MutationType } from '@/models/store';
+import { useLocalesStore } from '@/store/locales';
+import { LocaleInfoInterface } from '@/models/localization/LocaleInfo.interface';
+import LocaleSelector from '@/components/locale-selector/LocaleSelector.vue';
 
 export default defineComponent({
   name: 'App',
+  components: {
+    LocaleSelector,
+  },
   setup() {
     const i18n = useI18n();
+    console.log('i18n :', i18n);
+    const localesStore = useLocalesStore();
+
+    const availableLocales = computed(() => {
+      return localesStore.state.availableLocales;
+    });
+
+    const onLocaleClicked = (localeInfo: LocaleInfoInterface) => {
+      localesStore.action(MutationType.locales.selectLocale, localeInfo.locale);
+    };
 
     return {
       i18n,
+      availableLocales,
+      onLocaleClicked,
     };
   },
 });

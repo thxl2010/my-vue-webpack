@@ -11,6 +11,13 @@ const data: LocalesDataInterface = {
     },
     'en-US': {
       welcome: 'Welcome: this message is localized in English',
+      msg: 'hello',
+      named: '{msg} world!',
+      list: '{0} world!',
+      literal: "{'hello'} world!",
+      the_world: 'the world',
+      dio: 'DIO:',
+      linked: '@:dio @:the_world !!!!',
     },
     'it-IT': {
       welcome: 'Benvenuti: this message is localized in Italian',
@@ -20,6 +27,15 @@ const data: LocalesDataInterface = {
     },
     'es-ES': {
       welcome: 'Bienvenido: this message is localized in Spanish',
+    },
+    'ja-JP': {
+      msg: 'こんにちは',
+      named: '{msg} 世界！',
+      list: '{0} 世界！',
+      literal: "{'こんにちは'} 世界！",
+      the_world: 'ザ・ワールド！',
+      dio: 'ディオ:',
+      linked: '@:dio @:the_world ！！！！',
     },
   },
 };
