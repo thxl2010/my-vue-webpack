@@ -4,41 +4,40 @@ interface LocalesDataInterface {
   messages: LocaleMessages<VueMessageType>;
 }
 
-const data: LocalesDataInterface = {
-  messages: {
-    'zh-CN': {
-      welcome: '欢迎：这个信息是以中文本地化的',
-    },
-    'en-US': {
-      welcome: 'Welcome: this message is localized in English',
-      msg: 'hello',
-      named: '{msg} world!',
-      list: '{0} world!',
-      literal: "{'hello'} world!",
-      the_world: 'the world',
-      dio: 'DIO:',
-      linked: '@:dio @:the_world !!!!',
-    },
-    'it-IT': {
-      welcome: 'Benvenuti: this message is localized in Italian',
-    },
-    'fr-FR': {
-      welcome: 'Bienvenue: this message is localized in French',
-    },
-    'es-ES': {
-      welcome: 'Bienvenido: this message is localized in Spanish',
-    },
-    'ja-JP': {
-      msg: 'こんにちは',
-      named: '{msg} 世界！',
-      list: '{0} 世界！',
-      literal: "{'こんにちは'} 世界！",
-      the_world: 'ザ・ワールド！',
-      dio: 'ディオ:',
-      linked: '@:dio @:the_world ！！！！',
-    },
-  },
+/**
+ * @name: getLocalesData
+ * @description: Helper to load the locale json files …
+ */
+const getLocalesData = (): LocalesDataInterface => {
+  // use require.context to get all the .json files …
+  const files = (require as any).context(
+    './locales',
+    true,
+    /[A-Za-z0-9-_,\s]+\.json$/i
+  );
+  console.log('locales files :', files);
+  // create the instance that will hold the loaded data
+  const localeData: LocalesDataInterface = {
+    messages: {},
+  };
+  // loop through all the files
+  const keys: string[] = files.keys();
+  keys.forEach((key: string) => {
+    // extract name without extension
+    const matched = key.match(/([A-Za-z0-9-_]+)\./i);
+    if (matched && matched.length > 1) {
+      const localeId = matched[1];
+      // from each file, set the related messages property
+      localeData.messages[localeId] = files(key).messages;
+    }
+  });
+
+  return localeData;
 };
+
+// create our data dynamically by loading the JSON files through our getLocalesData helper
+const data: LocalesDataInterface = getLocalesData();
+console.log('getLocalesData() :', getLocalesData());
 
 export const i18n = createI18n({
   locale: 'zh-CN',

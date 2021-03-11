@@ -1,0 +1,15 @@
+{
+  "messages": {
+    "welcome": "Welcome: this message is localized in English",
+    "navigation": {
+      "home": "Home",
+      "about": "About",
+      "study": "Study"
+    },
+    "items": {
+      "list": {
+        "header": "My Items"
+      }
+    }
+  }
+}

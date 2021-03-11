@@ -1,0 +1,15 @@
+{
+  "messages": {
+    "welcome": "欢迎：这个信息是以中文本地化的",
+    "navigation": {
+      "home": "首页",
+      "about": "关于",
+      "study": "学习"
+    },
+    "items": {
+      "list": {
+        "header": "我的项目"
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Items - loading: {{ loading }}</h3>
+    <h3>{{ i18n.t('items.list.header') }}</h3>
     <Loader v-show="loading" />
     <ul>
       <Item
@@ -18,6 +18,7 @@ import { defineComponent, PropType } from 'vue';
 import Item from '@/components/items/children/Item.component.vue';
 import Loader from '@/components/shared/Loader.vue';
 import { ItemInterface } from '@/models/items/Item.interface';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   components: {
@@ -35,12 +36,15 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const i18n = useI18n();
+
     const handleItemSelect = (item: ItemInterface) => {
       console.log('handleItemSelect :', item, item.selected);
       emit('selectItem', item);
     };
 
     return {
+      i18n,
       handleItemSelect,
     };
   },

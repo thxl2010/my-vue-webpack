@@ -1,0 +1,15 @@
+{
+  "messages": {
+    "welcome": "歓迎する：この情報は日本語で現地化されています",
+    "navigation": {
+      "home": "歓迎",
+      "about": "アバウト",
+      "study": "学習"
+    },
+    "items": {
+      "list": {
+        "header": "マイアイテム"
+      }
+    }
+  }
+}

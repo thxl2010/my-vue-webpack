@@ -37,5 +37,11 @@ export const initialLocalesState: LocalesStateInterface = {
       flag: 'fr',
       selected: false,
     },
+    {
+      name: 'Janpan',
+      locale: 'ja-JP',
+      flag: 'jp',
+      selected: false,
+    },
   ],
 };
