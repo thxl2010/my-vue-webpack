@@ -1,4 +1,6 @@
 <template>
+  <div class="long-date">Date: {{ i18n.d(new Date(), 'long') }}</div>
+  <div class="currency">currency : {{ i18n.n(999, 'currency') }}</div>
   <h2>{{ i18n.t('welcome') }}</h2>
   <LocaleSelector
     :availableLocales="availableLocales"

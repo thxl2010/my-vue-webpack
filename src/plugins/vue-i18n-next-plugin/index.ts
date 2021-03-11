@@ -2,6 +2,8 @@ import { createI18n, LocaleMessages, VueMessageType } from 'vue-i18n';
 
 interface LocalesDataInterface {
   messages: LocaleMessages<VueMessageType>;
+  datetimeFormats: any;
+  numberFormats: any;
 }
 
 /**
@@ -19,6 +21,8 @@ const getLocalesData = (): LocalesDataInterface => {
   // create the instance that will hold the loaded data
   const localeData: LocalesDataInterface = {
     messages: {},
+    datetimeFormats: {},
+    numberFormats: {},
   };
   // loop through all the files
   const keys: string[] = files.keys();
@@ -29,6 +33,8 @@ const getLocalesData = (): LocalesDataInterface => {
       const localeId = matched[1];
       // from each file, set the related messages property
       localeData.messages[localeId] = files(key).messages;
+      localeData.datetimeFormats[localeId] = files(key).datetimeFormats;
+      localeData.numberFormats[localeId] = files(key).numberFormats;
     }
   });
 
@@ -43,4 +49,6 @@ export const i18n = createI18n({
   locale: 'zh-CN',
   fallbackLocale: 'en-US',
   messages: data.messages,
+  datetimeFormats: data.datetimeFormats,
+  numberFormats: data.numberFormats,
 });
