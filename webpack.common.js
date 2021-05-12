@@ -28,21 +28,6 @@ module.exports = {
         use: ['eslint-loader'],
         enforce: 'pre',
       },
-      // ! [加载 CSS](https://www.webpackjs.com/guides/asset-management/#%E5%8A%A0%E8%BD%BD-css)
-      {
-        test: /\.css$/,
-        use: ['vue-style-loader', 'css-loader'],
-      },
-      {
-        test: /\.less$/i,
-        use: [
-          // compiles Less to CSS
-          'vue-style-loader',
-          'css-loader',
-          'postcss-loader',
-          'less-loader',
-        ],
-      },
 
       // ! [加载图片](https://www.webpackjs.com/guides/asset-management/#%E5%8A%A0%E8%BD%BD%E5%9B%BE%E7%89%87)
       {

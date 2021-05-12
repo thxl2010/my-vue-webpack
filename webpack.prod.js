@@ -15,7 +15,16 @@ module.exports = merge(common, {
       // ! [加载 CSS](https://www.webpackjs.com/guides/asset-management/#%E5%8A%A0%E8%BD%BD-css)
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            // options: {
+            //   esModule: false,
+            // },
+          },
+          'postcss-loader',
+        ],
       },
       {
         test: /\.less$/i,
