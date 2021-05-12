@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
-const common = require('./webpack.common.js');
+const common = require('./webpack.common');
 
 module.exports = merge(common, {
   mode: 'development',
@@ -31,8 +31,8 @@ module.exports = merge(common, {
   },
   plugins: [
     new webpack.DefinePlugin({
-      BASE_URL: 'http://localhost:3003',
-      API_BASE_URL: 'https://api.example.com',
+      BASE_URL: '"http://localhost:3003"',
+      API_BASE_URL: '"https://api.example.com"',
     }),
   ],
 });

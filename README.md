@@ -10,7 +10,7 @@
 ### ESLint: 配置文件移除 package.json 中的 `eslintConfig`，单独配置
 
 ```sh
-npm install eslint --save-dev
+npm install eslint eslint-plugin-vue --save-dev
 
 # 配置文件 -> ./.eslintrc.js
 ./node_modules/.bin/eslint --init
@@ -94,7 +94,7 @@ npm i -D @babel/core @babel/preset-env babel-loader
 
 #### eslint-loader
 
-#### css-loader & style-loader & MiniCssExtractPlugin.loader(生产环境)
+#### css-loader & vue-style-loader & MiniCssExtractPlugin.loader(生产环境)
 
 #### 静态资源加载
 

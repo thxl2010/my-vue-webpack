@@ -1,6 +1,6 @@
 const { merge } = require('webpack-merge');
 const webpack = require('webpack');
-const common = require('./webpack.common.js');
+const common = require('./webpack.common');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPLugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -14,8 +14,17 @@ module.exports = merge(common, {
     rules: [
       // ! [加载 CSS](https://www.webpackjs.com/guides/asset-management/#%E5%8A%A0%E8%BD%BD-css)
       {
-        test: /.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
+      },
+      {
+        test: /\.less$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'less-loader',
+        ],
       },
     ],
   },
@@ -25,8 +34,8 @@ module.exports = merge(common, {
       patterns: [{ from: 'public', to: 'public' }],
     }),
     new webpack.DefinePlugin({
-      BASE_URL: 'https://hello.com',
-      API_BASE_URL: 'https://api.hello.com',
+      BASE_URL: '"https://hello.com"',
+      API_BASE_URL: '"https://api.hello.com"',
     }),
     new MiniCssExtractPlugin(),
   ],
@@ -45,6 +54,7 @@ module.exports = merge(common, {
     minimize: true,
     minimizer: [
       // For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
+      // eslint-disable-next-line
       `...`,
       new CssMinimizerPlugin(),
     ],

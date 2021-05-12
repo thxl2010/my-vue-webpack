@@ -1,6 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { VueLoaderPlugin } = require('vue-loader');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
   entry: './src/main.js',
@@ -14,39 +14,43 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
+        use: ['vue-loader'],
       },
       {
-        test: /.js$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
         // use: ['babel-loader', 'eslint-loader'],
       },
       {
-        test: /.js$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         use: ['eslint-loader'],
         enforce: 'pre',
       },
       // ! [加载 CSS](https://www.webpackjs.com/guides/asset-management/#%E5%8A%A0%E8%BD%BD-css)
       {
-        test: /.css$/,
-        // use: 'css-loader',
+        test: /\.css$/,
+        use: ['vue-style-loader', 'css-loader'],
+      },
+      {
+        test: /\.less$/i,
         use: [
-          // 将样式通过 style 标签注入
-          'style-loader',
+          // compiles Less to CSS
+          'vue-style-loader',
           'css-loader',
-        ], // loader 从后向前执行
-        // use: [MiniCssExtractPlugin.loader, 'css-loader'],
+          'postcss-loader',
+          'less-loader',
+        ],
       },
 
       // ! [加载图片](https://www.webpackjs.com/guides/asset-management/#%E5%8A%A0%E8%BD%BD%E5%9B%BE%E7%89%87)
       {
-        test: /.(jpe?g|gif)$/,
+        test: /\.(jpe?g|gif)$/,
         use: ['file-loader'],
       },
       // {
-      //   test: /.(png)$/,
+      //   test: /\.(png)$/,
       //   dependency: { not: ['url'] },
       //   use: [
       //     {
@@ -62,7 +66,7 @@ module.exports = {
 
       // ! [Asset Modules - Resource assets](https://webpack.js.org/guides/asset-modules/#resource-assets)
       {
-        test: /.(png)$/,
+        test: /\.(png)$/,
         type: 'asset/resource', // output.assetModuleFilename 或者 generator.filename
         // generator: {
         //   filename: 'static/[hash][ext][query]',
@@ -79,7 +83,7 @@ module.exports = {
     // index.html
     new HtmlWebpackPlugin({
       inject: true,
-      // title: 'hello HtmlWebpackPlugin',
+      title: 'hello HtmlWebpackPlugin',
       meta: {
         viewport: 'width=device-width',
       },
