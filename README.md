@@ -35,6 +35,7 @@ npm i -D prettier eslint-plugin-prettier eslint-config-prettier
 
 ```sh
 npm install --save-dev stylelint stylelint-config-standard
+npm i -D stylelint-webpack-plugin
 ```
 
 ### 配置文件 ： [.stylelintrc.js](./.stylelintrc.js)
