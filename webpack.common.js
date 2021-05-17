@@ -9,7 +9,13 @@ module.exports = {
     // ! [cache: hash](https://webpack.js.org/guides/caching/)
     filename: '[name].[contenthash].js',
     path: path.join(__dirname, 'dist'),
+    publicPath: '/',
     assetModuleFilename: 'images/[name]-[hash][ext][query]',
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src/'),
+    },
   },
   module: {
     rules: [

@@ -5,12 +5,16 @@
   "scripts": {
     "serve": "webpack serve --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js --stats-children",
+    "server": "node ./server/app.js",
     "lint": "eslint --ext .js src",
     "lint:fix": "eslint --fix --ext .js src"
   },
   "dependencies": {
+    "connect-history-api-fallback": "^1.6.0",
     "core-js": "^3.12.1",
-    "vue": "^2.6.12"
+    "express": "^4.17.1",
+    "vue": "^2.6.12",
+    "vue-router": "^3.5.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
