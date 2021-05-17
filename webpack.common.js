@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+// const StylelintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
   entry: './src/main.js',
@@ -74,6 +75,8 @@ module.exports = {
     new webpack.ProgressPlugin(),
 
     new VueLoaderPlugin(),
+    // new StylelintPlugin(),
+
     // index.html
     // ! WARNING: meta 和 chunks 参数会导致HTML文件中无法注入script和link标签 ？？？
     new HtmlWebpackPlugin({
