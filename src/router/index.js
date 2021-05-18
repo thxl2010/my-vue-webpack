@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+// import VueRouter from '../../../module-1/task-2-vue-router/code/duyb-vue-router/';
 import Index from '../views/Index.vue';
 import Layout from '@/components/Layout.vue';
 
